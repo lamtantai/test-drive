@@ -16,9 +16,9 @@ export default function Cars() {
 
   return (
     <section className="">
-      <h1 className="p-xs pt-44 text-xl font-bold uppercase md:text-4xl">
+      <h1 className="p-xs text-xl font-bold uppercase md:text-4xl">
         Danh sách mẫu xe{" "}
-        <span className="text-lightGray text-sm lg:text-xl">
+        <span className="text-lightBlack text-sm lg:text-xl">
           ({cars.length} Mẫu)
         </span>
       </h1>

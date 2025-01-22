@@ -6,16 +6,19 @@ export default {
       spacing: {
         xs: "var(--spacing-xs)",
         sm: "var(--spacing-sm)",
-        md: "24px",
+        headerHeight: "var(--header-height)",
       },
 
       colors: {
         primary: "#000000",
         secondary: "#ffffff",
+        lightBlack: "#292929",
         lightGray: "#9ca3af",
         accent: "#2563eb",
         darkSlate: "#1f2937",
       },
+
+      height: {},
     },
   },
   plugins: [],

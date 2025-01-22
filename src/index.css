@@ -9,11 +9,13 @@ image {
 :root {
   --spacing-xs: 1rem;
   --spacing-sm: 2rem;
+
+  --header-height: 80px;
 }
 
 @media (min-width: 1024px) {
   :root {
     --spacing-xs: 2rem;
-    --spacing-sm: 3rem;
+    --spacing-sm: 4rem;
   }
 }

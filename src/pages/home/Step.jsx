@@ -7,7 +7,7 @@ export default function Step({ icon, text1, text2 }) {
         to="/cars"
         className="grid auto-rows-min grid-cols-[50px,1fr] gap-x-4"
       >
-        <span className="border-secondary w-fit rounded-full border p-2 text-xl">
+        <span className="w-fit rounded-full border border-secondary p-2 text-xl">
           {icon}
         </span>
 
@@ -16,7 +16,7 @@ export default function Step({ icon, text1, text2 }) {
           <span className="">&#129122;</span>
         </div>
 
-        <p className="text-lightGray col-span-full col-start-2 w-full text-sm">
+        <p className="text-lightBlack col-span-full col-start-2 w-full text-sm">
           {text2}
         </p>
       </Link>

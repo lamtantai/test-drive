@@ -4,8 +4,9 @@ export default function PageNav() {
   return (
     <nav className="flex items-center">
       <ul className="flex items-center gap-x-4 font-medium sm:gap-x-10">
-        <li className="hover:text-accent transition-colors duration-300">
+        <li className="transition-colors duration-300 hover:text-accent">
           <NavLink
+            end
             to="/cars"
             className={({ isActive }) => (isActive ? "text-accent" : "")}
           >
@@ -13,7 +14,7 @@ export default function PageNav() {
           </NavLink>
         </li>
 
-        <li className="hover:text-accent transition-colors duration-300">
+        <li className="transition-colors duration-300 hover:text-accent">
           <NavLink
             to="/about"
             className={({ isActive }) => (isActive ? "text-accent" : "")}

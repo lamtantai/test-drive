@@ -3,7 +3,7 @@ export default function ShimmerBackgroundImage({ src, alt = "" }) {
     <img
       src={src}
       alt={alt}
-      className="from-lightGray to-lightGray via-secondary h-full bg-gradient-to-r object-cover"
+      className="from-lightBlack to-lightBlack h-full bg-gradient-to-r via-secondary object-cover"
     />
   );
 }

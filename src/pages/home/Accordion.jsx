@@ -1,4 +1,4 @@
-import LinkButton from "../../components/LinkButton";
+import CTAButton from "../../components/CTAButton";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 export default function Accordion({
@@ -11,7 +11,7 @@ export default function Accordion({
   children,
 }) {
   return (
-    <li className="border-primary border-t">
+    <li className="border-t border-primary">
       <button
         className={`flex w-full items-center justify-between py-6 text-3xl font-semibold ${currentIndex === index ? "text-accent" : ""}`}
         onClick={() => onClick(currentIndex === index ? null : index)}
@@ -25,15 +25,15 @@ export default function Accordion({
       <div
         className={`flex flex-col gap-6 ${currentIndex === index ? "block" : "hidden"}`}
       >
-        <p className="text-primary max-w-[85ch] font-semibold md:text-lg">
+        <p className="max-w-[85ch] font-semibold text-primary md:text-lg">
           {children}
         </p>
-        <LinkButton label="Khám phá ngay" href={href} className="w-fit" />
+        <CTAButton label="Khám phá ngay" href={href} className="w-fit" />
         <img
           src={imageSrc}
           alt=""
           loading="lazy"
-          className="bg-lightGray aspect-[4/3] h-full w-full object-cover object-center lg:aspect-[2.4/1]"
+          className="bg-lightBlack aspect-[4/3] h-full w-full object-cover object-center lg:aspect-[2.4/1]"
         />
       </div>
     </li>
