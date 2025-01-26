@@ -3,13 +3,12 @@ import {
   IoCalendarClearOutline,
   IoKeyOutline,
 } from "react-icons/io5";
-
 import Step from "./Step";
 
 export default function HowItWorks() {
   return (
     <section className="bg-gray-800">
-      <ul className="px-xs text-secondary flex flex-col divide-y-[1px] py-10 lg:flex-row lg:justify-between lg:divide-none">
+      <ul className="flex flex-col divide-y-[1px] px-xs py-10 text-secondary lg:flex-row lg:justify-between lg:divide-none">
         <Step
           icon={<IoCarSportOutline />}
           text1="Chọn xe"

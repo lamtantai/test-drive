@@ -1,4 +1,4 @@
-import CTAButton from "../../components/CTAButton";
+import CTAButton from "../../../components/CTAButton";
 
 export default function HeroSection() {
   return (
@@ -6,7 +6,7 @@ export default function HeroSection() {
       <img
         src="/background-car.png"
         alt=""
-        className="bg-lightBlack h-full w-full object-cover brightness-75"
+        className="h-full w-full bg-lightBlack object-cover brightness-75"
       />
 
       <div className="absolute inset-0 flex items-end px-xs pb-xs">
@@ -17,8 +17,8 @@ export default function HeroSection() {
           </h1>
 
           <CTAButton
-            label="Đặt lịch lái thử"
-            href="/"
+            label="Chọn xe và đặt lịch"
+            href="/cars"
             outlined
             className="mt-xs"
           />

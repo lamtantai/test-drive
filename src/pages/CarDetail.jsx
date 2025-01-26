@@ -1,26 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import getCarId from "../services/getCarId";
 import { useParams } from "react-router";
 
-import CTAButton from "../components/CTAButton";
-import { DatePicker } from "../features/cars/components/DatePicker";
+import Spinner from "../components/Spinner";
+import AdditionalCarInfo from "../features/cars/components/AdditionalCarInfo";
+import OtherCars from "../features/cars/components/OtherCars";
+
+import RegisterForm from "../features/cars/components/RegisterForm";
+import { getCars } from "../services/apiCar";
 
 export default function CarDetail() {
   const carId = useParams().carId;
 
-  const { data, error, status } = useQuery({
-    queryKey: ["carId"],
-    queryFn: () => getCarId(carId),
+  const { data: cars, isLoading } = useQuery({
+    queryKey: ["cars"],
+    queryFn: getCars,
   });
 
-  if (status === "pending") return <h1 className="pt-96">loading</h1>;
+  if (isLoading) return <Spinner />;
 
-  const car = data[0];
+  const car = cars.find((car) => car.id === Number(carId));
+
+  const ortherCars = cars
+    .filter((car) => car.id !== Number(carId))
+    .filter((car) => car.availabilityStatus);
 
   return (
     <section className="">
-      <div className="grid gap-4 lg:grid-cols-2 lg:gap-16 lg:p-xs">
-        <div className="bg-slate-50 lg:self-start">
+      <div className="mx-auto mb-20 grid md:mb-60 md:grid-cols-2">
+        <div className="bg-slate-50 md:self-start">
           <img
             src={car.imageUrl}
             alt=""
@@ -28,17 +35,18 @@ export default function CarDetail() {
           />
         </div>
 
-        <div className="px-6 font-semibold lg:p-0">
+        <div className="w-full p-xs">
           <h1 className="text-3xl font-bold 2xl:text-5xl">
             {car.make} - {car.model}
           </h1>
-          <p className="text-lightBlack mt-4 2xl:text-xl">{car.description}</p>
 
-          <ul className="mt-10 flex flex-col gap-8 xl:flex-row xl:justify-between">
+          <p className="mt-2 text-lightBlack 2xl:text-xl">{car.description}</p>
+
+          <ul className="mb-6 mt-8 flex flex-col gap-6 lg:flex-row lg:flex-wrap lg:justify-between">
             <li className="font-medium">
               <p className="text-lightBlack">Lên đến</p>
               <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">{car.power} HP</p>
-              <p className="text-lightBlack text-sm">Công suất định mức</p>
+              <p className="text-sm text-lightBlack">Công suất định mức</p>
             </li>
 
             <li className="font-medium">
@@ -46,7 +54,7 @@ export default function CarDetail() {
               <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">
                 {car.acceleration} giây
               </p>
-              <p className="text-lightBlack text-sm">từ 0 lên đến 100 km/h</p>
+              <p className="text-sm text-lightBlack">từ 0 lên đến 100 km/h</p>
             </li>
 
             <li className="font-medium">
@@ -54,14 +62,26 @@ export default function CarDetail() {
               <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">
                 {car.topSpeed} km/h
               </p>
-              <p className="text-lightBlack text-sm">Vận tốc tối đa</p>
+              <p className="text-sm text-lightBlack">Vận tốc tối đa</p>
             </li>
           </ul>
+
+          <AdditionalCarInfo car={car} />
+
+          <h2 className="mb-4 mt-10 text-3xl font-semibold">
+            Đăng ký lái thử xe ngay
+          </h2>
+
+          <RegisterForm
+            isCarReady={car.availabilityStatus}
+            carId={car.id}
+            car={car}
+          />
         </div>
       </div>
-      <div className="w-full">
-        <DatePicker />
-      </div>
+
+      <h2 className="mb-2 px-xs text-5xl font-semibold">Mẫu xe khác</h2>
+      <OtherCars cars={ortherCars} />
     </section>
   );
 }

@@ -1,24 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import getCars from "../services/getCars";
 import CarList from "../features/cars/components/CarList";
+import Spinner from "../components/Spinner";
+import { getCars } from "../services/apiCar";
 
 export default function Cars() {
-  const {
-    data: cars,
-    error,
-    status,
-  } = useQuery({
+  const { data: cars, isLoading } = useQuery({
     queryKey: ["cars"],
     queryFn: getCars,
   });
 
-  if (status === "pending") return <div className="pt-96">LOADING</div>;
+  if (isLoading) return <Spinner />;
 
   return (
-    <section className="">
+    <section className="px-xs">
       <h1 className="p-xs text-xl font-bold uppercase md:text-4xl">
         Danh sách mẫu xe{" "}
-        <span className="text-lightBlack text-sm lg:text-xl">
+        <span className="text-sm text-lightBlack lg:text-xl">
           ({cars.length} Mẫu)
         </span>
       </h1>

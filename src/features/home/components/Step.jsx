@@ -16,7 +16,7 @@ export default function Step({ icon, text1, text2 }) {
           <span className="">&#129122;</span>
         </div>
 
-        <p className="text-lightBlack col-span-full col-start-2 w-full text-sm">
+        <p className="col-span-full col-start-2 w-full text-sm text-lightGray">
           {text2}
         </p>
       </Link>

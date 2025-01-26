@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .form-field {
+    @apply w-full rounded-md bg-zinc-100 text-lg font-medium hover:bg-zinc-200 hover:shadow-[0px_0px_2px_0px_rgba(0,0,0,1)] lg:text-xl;
+  }
+}
+
 image {
   max-width: 100%;
 }
@@ -9,6 +15,8 @@ image {
 :root {
   --spacing-xs: 1rem;
   --spacing-sm: 2rem;
+
+  --input-inline-padding: 1rem;
 
   --header-height: 80px;
 }

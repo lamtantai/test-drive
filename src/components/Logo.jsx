@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
-
 export default function Logo() {
   return (
-    <Link to="/" className="w-20 lg:w-32">
+    <div className="w-16 md:w-20">
       <img
         src="/logo.png"
         alt="Logo"
@@ -10,6 +8,6 @@ export default function Logo() {
         height={60}
         className="max-w-full"
       />
-    </Link>
+    </div>
   );
 }
