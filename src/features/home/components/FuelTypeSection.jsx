@@ -17,7 +17,7 @@ export default function FuelTypeSection() {
         </p>
       </div>
 
-      <ul className="mt-10 divide-y-[1px] divide-primary text-4xl">
+      <ul className="mt-10 text-4xl">
         <AccordionItem
           label="Xe Hybird"
           index={0}

@@ -5,8 +5,8 @@ import Spinner from "../components/Spinner";
 import AdditionalCarInfo from "../features/cars/components/AdditionalCarInfo";
 import OtherCars from "../features/cars/components/OtherCars";
 
-import RegisterForm from "../features/cars/components/RegisterForm";
 import { getCars } from "../services/apiCar";
+import BookingForm from "../features/cars/components/BookingForm";
 
 export default function CarDetail() {
   const carId = useParams().carId;
@@ -15,6 +15,8 @@ export default function CarDetail() {
     queryKey: ["cars"],
     queryFn: getCars,
   });
+
+  console.log("render");
 
   if (isLoading) return <Spinner />;
 
@@ -25,7 +27,7 @@ export default function CarDetail() {
     .filter((car) => car.availabilityStatus);
 
   return (
-    <section className="">
+    <section className="" key={carId}>
       <div className="mx-auto mb-20 grid md:mb-60 md:grid-cols-2">
         <div className="bg-slate-50 md:self-start">
           <img
@@ -72,7 +74,7 @@ export default function CarDetail() {
             Đăng ký lái thử xe ngay
           </h2>
 
-          <RegisterForm
+          <BookingForm
             isCarReady={car.availabilityStatus}
             carId={car.id}
             car={car}

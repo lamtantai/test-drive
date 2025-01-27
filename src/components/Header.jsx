@@ -1,8 +1,13 @@
 import { Link, NavLink } from "react-router";
+
 import Logo from "./Logo";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
+import { useUser } from "../context/UserContext";
+
 export default function Header() {
+  const { user } = useUser();
+
   return (
     <header className="sticky left-0 top-0 z-50 flex h-[--header-height] w-full items-center justify-between bg-secondary px-xs py-2 shadow-md">
       <Link to="/">
@@ -31,9 +36,9 @@ export default function Header() {
           </li>
 
           <li className="transition-colors duration-300 hover:text-accent">
-            <Link to="/account">
+            <Link to={user ? "account" : "/login"}>
               <span className="text-4xl">
-                <IoPersonCircleSharp />
+                {user ? user.email : <IoPersonCircleSharp />}
               </span>
             </Link>
           </li>

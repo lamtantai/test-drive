@@ -7,13 +7,14 @@ export default function TableDesktop({ bookings }) {
         <tr className="bg-zinc-200">
           <th className="px-6 py-3 text-left text-gray-600">STT</th>
 
-          <th className="px-6 py-3 text-left text-gray-600">Tên</th>
-
           <th className="px-6 py-3 text-left text-gray-600">Mẫu xe</th>
+
+          <th className="px-6 py-3 text-left text-gray-600">Tỉnh/TP</th>
 
           <th className="px-6 py-3 text-left text-gray-600">Ngày thử xe</th>
 
           <th className="px-6 py-3 text-left text-gray-600">Trạng thái</th>
+
           <th className="px-6 py-3 text-left text-gray-600"></th>
         </tr>
       </thead>
@@ -21,9 +22,11 @@ export default function TableDesktop({ bookings }) {
       <tbody>
         {bookings.map((booking, index) => (
           <tr key={booking.id} className="border-t border-zinc-200">
-            <td className="px-6 py-4 text-gray-800">{index + 1}</td>
-            <td className="px-6 py-4 text-gray-800">{booking.name}</td>
+            <td className="px-6 py-4 text-gray-800">
+              {String(index + 1).padStart(2, 0)}
+            </td>
             <td className="px-6 py-4 text-gray-800">{booking.model}</td>
+            <td className="px-6 py-4 text-gray-800">{booking.city}</td>
             <td className="px-6 py-4 text-gray-800">{booking.date}</td>
             <td
               className={`px-6 py-4 font-semibold ${booking.status === "completed" ? "text-green-600" : "text-yellow-600"}`}

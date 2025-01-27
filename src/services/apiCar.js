@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
 export async function getCars() {
-  let { data, error } = await supabase.from("cars").select("*");
+  const { data, error } = await supabase.from("cars").select("*");
 
   if (error) {
     console.error(error);
@@ -12,7 +12,7 @@ export async function getCars() {
 }
 
 export async function getCarId(id) {
-  let { data, error } = await supabase.from("cars").select("*").eq("id", id);
+  const { data, error } = await supabase.from("cars").select("*").eq("id", id);
 
   if (error) {
     console.error(error);

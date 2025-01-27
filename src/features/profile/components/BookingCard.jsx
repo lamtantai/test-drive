@@ -5,7 +5,7 @@ export default function BookingCard({ booking, index }) {
   return (
     <div
       key={booking.id}
-      className="shadow-card flex flex-col gap-xs rounded-md bg-white p-xs"
+      className="flex flex-col gap-xs rounded-md bg-white p-xs shadow-card"
     >
       {/* STT */}
       <div className="flex items-center justify-between">
@@ -20,11 +20,11 @@ export default function BookingCard({ booking, index }) {
       {/* Thông tin đặt xe */}
       <div className="text-lg">
         <p>
-          Tên: <strong>{booking.name}</strong>
+          Mẫu xe: <strong>{booking.model}</strong>
         </p>
 
         <p>
-          Mẫu xe: <strong>{booking.model}</strong>
+          Tỉnh/TP: <strong>{booking.city}</strong>
         </p>
 
         <p>

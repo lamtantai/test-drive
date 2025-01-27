@@ -1,9 +1,15 @@
-export default function Select({ id, icon, onChange, optionList }) {
+export default function Select({
+  placeholder,
+  name,
+  icon,
+  onChange,
+  optionList,
+}) {
   return (
     <div className="relative">
       <select
-        name={id}
-        id={id}
+        name={name}
+        id={name}
         className="form-field p-[--input-inline-padding]"
         onChange={onChange}
         style={{
@@ -12,12 +18,15 @@ export default function Select({ id, icon, onChange, optionList }) {
           appearance: "none",
         }}
       >
+        <option value="">{placeholder}</option>
+
         {optionList?.map((item) => (
           <option value={item.name} key={item.name}>
             {item.name}
           </option>
         ))}
       </select>
+
       <span className="absolute right-[--input-inline-padding] top-1/2 -translate-y-1/2 cursor-pointer text-2xl">
         {icon}
       </span>

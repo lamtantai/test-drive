@@ -8,7 +8,6 @@ export default function DeleteButton({ bookingId }) {
   const { mutate, isPending } = useMutation({
     mutationFn: deleteBooking,
     onSuccess: () => {
-      console.log("success");
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
   });

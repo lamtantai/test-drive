@@ -1,28 +1,24 @@
 import { useState } from "react";
 
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
-import { vi } from "react-day-picker/locale";
-import "react-day-picker/style.css";
-
 import Input from "../../../components/Input";
+import Calendar from "./Calendar";
 
-export function DatePicker() {
-  const [selected, setSelected] = useState();
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+export default function DatePicker({ onChange }) {
+  const [selectedDate, setSelectedDate] = useState("");
+  const [openCalendar, setOpenCalendar] = useState(false);
 
-  const defaultClassNames = getDefaultClassNames();
+  function formattedDate(date) {
+    return date.toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  }
 
-  const date = new Date();
-  const monthsToAdd = 2;
-
-  const endDate = new Date();
-  endDate.setMonth(endDate.getMonth() + monthsToAdd);
-
-  const beforeMatcher = { before: date };
-
-  function handleSelectDate(date) {
-    setSelected(date);
-    setIsCalendarOpen(false);
+  function handleChange(date) {
+    setSelectedDate(date);
+    setOpenCalendar(false);
+    onChange(formattedDate(date));
   }
 
   return (
@@ -31,37 +27,15 @@ export function DatePicker() {
         label="Chọn một ngày (Tùy chọn)"
         type="text"
         readOnly
-        name="pickedDate"
-        value={
-          selected
-            ? selected.toLocaleDateString("vi-VN", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })
-            : ""
-        }
-        onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+        // onChange={handleChange}
+        name="date"
+        value={selectedDate ? formattedDate(selectedDate) : ""}
+        onClick={() => setOpenCalendar(!openCalendar)}
       />
 
-      {isCalendarOpen && (
-        <div className="absolute z-10 mt-4 w-full bg-secondary p-2 shadow-lg">
-          <DayPicker
-            classNames={{
-              months: `${defaultClassNames.months} !max-w-full`,
-              month: `${defaultClassNames.month} w-full`,
-              month_grid: `${defaultClassNames.month_grid} w-full`,
-              day_button: `${defaultClassNames.day_button} !inline-block hover:border-2 hover:border-[blue]`,
-            }}
-            showOutsideDays
-            mode="single"
-            locale={vi}
-            defaultMonth={selected}
-            endMonth={endDate}
-            disabled={beforeMatcher}
-            selected={selected}
-            onSelect={handleSelectDate}
-          />
+      {openCalendar && (
+        <div className="absolute z-10 mt-3 w-full bg-secondary p-2 shadow-card">
+          <Calendar onSelectDate={handleChange} />
         </div>
       )}
     </div>

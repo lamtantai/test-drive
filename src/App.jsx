@@ -14,6 +14,7 @@ import Account from "./pages/Account";
 import Bookings from "./pages/Bookings";
 
 import { ToastContainer, Zoom } from "react-toastify";
+import UserProvider from "./context/UserContext";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,7 @@ export default function App() {
         newestOnTop={false}
         closeOnClick={false}
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="colored"
@@ -39,7 +40,13 @@ export default function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <UserProvider>
+                <AppLayout />
+              </UserProvider>
+            }
+          >
             <Route index element={<Home />} />
             <Route path="cars" element={<Cars />} />
             <Route path="cars/:carId" element={<CarDetail />} />
@@ -50,10 +57,11 @@ export default function App() {
               <Route path="bookings" element={<Bookings />} />
             </Route>
 
-            <Route path="login" element={<Login />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
+
+          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

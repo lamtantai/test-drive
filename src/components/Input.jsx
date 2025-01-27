@@ -17,7 +17,7 @@ export default function Input({
     <div className="relative">
       <label
         htmlFor={name}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 pl-[--input-inline-padding] text-lightBlack transition-transform duration-200 ${
+        className={`absolute left-0 top-1/2 -translate-y-1/2 pl-[--input-inline-padding] font-medium transition-transform duration-200 ${
           focused || value ? "-translate-y-5 text-sm" : "text-lg lg:text-xl"
         }`}
       >
