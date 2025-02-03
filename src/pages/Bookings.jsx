@@ -1,27 +1,52 @@
-import TableMobile from "../features/profile/components/TableMobile";
-import TableDesktop from "../features/profile/components/TableDesktop";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getBookings } from "../services/apiBooking";
-import Spinner from "../components/Spinner";
+
+import BookingListDesktop from "../features/profile/components/BookingListDesktop";
+import BookingListMobile from "../features/profile/components/BookingListMobile";
+import FilterList from "../components/FilterList";
+import useFilteredValue from "../hooks/useFilteredValue";
 
 export default function Bookings() {
-  const { data: bookings, isLoading } = useQuery({
+  const { data: bookings } = useSuspenseQuery({
     queryKey: ["bookings"],
     queryFn: getBookings,
   });
 
-  if (isLoading) return <Spinner />;
+  let filteredBookings;
+
+  const filteredValue = useFilteredValue("status");
+
+  function filterBookingsStatus(value) {
+    return bookings.filter((booking) => booking.status === value);
+  }
+
+  if (filteredValue === "all") filteredBookings = bookings;
+
+  if (filteredValue === "pending")
+    filteredBookings = filterBookingsStatus("pending");
+
+  if (filteredValue === "completed")
+    filteredBookings = filterBookingsStatus("completed");
 
   return (
     <>
-      {/* Desktop Table */}
+      <FilterList
+        filterField="status"
+        options={[
+          { value: "all", label: "Tất cả" },
+          { value: "pending", label: "Chưa hoàn thành" },
+          { value: "completed", label: "Hoàn thành" },
+        ]}
+        filteredValue={filteredValue}
+      />
+      {/* Máy tính */}
       <div className="hidden lg:block">
-        <TableDesktop bookings={bookings} />
+        <BookingListDesktop bookings={filteredBookings} />
       </div>
 
-      {/* Mobile Table */}
+      {/* Điện thoại */}
       <div className="lg:hidden">
-        <TableMobile bookings={bookings} />
+        <BookingListMobile bookings={filteredBookings} />
       </div>
     </>
   );

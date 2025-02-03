@@ -1,11 +1,12 @@
 import { Outlet } from "react-router";
 import TabList from "../features/profile/components/TabList";
+import LogoutButton from "../features/profile/components/LogoutButton";
 
 export default function Account() {
   return (
     <div className="flex min-h-[calc(100vh-(var(--header-height)))] flex-col gap-10 px-xs pt-10 lg:flex-row">
       <section className="flex flex-col gap-10 lg:flex-1 lg:border-r-2">
-        <div className="flex flex-col gap-4 lg:order-last lg:mt-auto">
+        <div className="flex flex-col gap-4 lg:order-last">
           <div className="flex items-center gap-4">
             <img
               src="/ALL-CAR.png"
@@ -17,7 +18,7 @@ export default function Account() {
             <h1 className="text-2xl font-semibold">Xin chào, userName</h1>
           </div>
 
-          <button className="bg-red-50 p-3">Đăng xuất</button>
+          <LogoutButton />
         </div>
 
         <TabList />

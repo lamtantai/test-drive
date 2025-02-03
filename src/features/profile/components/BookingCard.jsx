@@ -1,23 +1,27 @@
-// BookingCard.js
+import formattedDate from "../../../utils/formattedDate";
 import DeleteButton from "./DeleteButton";
 
 export default function BookingCard({ booking, index }) {
+  const date = new Date();
+
+  const bookingDate = new Date(booking.date);
+
+  const yesterday = new Date(date);
+  yesterday.setDate(date.getDate() - 1); // Trừ đi 1 ngày từ ngày hiện tại
+
+  // So sánh nếu ngày hiện tại lớn hơn bookingDate 1 ngày
+  const isCompleted = yesterday > bookingDate;
+
   return (
-    <div
-      key={booking.id}
-      className="flex flex-col gap-xs rounded-md bg-white p-xs shadow-card"
-    >
-      {/* STT */}
+    <div className="flex flex-col gap-xs rounded-md bg-white p-xs shadow-card">
       <div className="flex items-center justify-between">
         <p className="text-xl">
           STT: <strong>{String(index + 1).padStart(2, "0")}</strong>
         </p>
 
-        {/* Nút Xóa */}
         <DeleteButton bookingId={booking.id} />
       </div>
 
-      {/* Thông tin đặt xe */}
       <div className="text-lg">
         <p>
           Mẫu xe: <strong>{booking.model}</strong>
@@ -28,20 +32,19 @@ export default function BookingCard({ booking, index }) {
         </p>
 
         <p>
-          Ngày thử xe: <strong>{booking.date}</strong>
+          Ngày thử xe: <strong>{formattedDate(bookingDate)}</strong>
         </p>
       </div>
 
-      {/* Trạng thái */}
       <div
         className={`rounded-md py-2 text-center ${
-          booking.status === "completed"
-            ? "border border-green-300 bg-green-100 text-green-800"
-            : "border border-yellow-300 bg-yellow-100 text-yellow-800"
+          isCompleted
+            ? "bg-complete-100 text-complete-700"
+            : "bg-pending-100 text-pending-700"
         }`}
       >
         <p className="font-medium">
-          {booking.status === "completed" ? "Hoàn thành" : "Chưa hoàn thành"}
+          {isCompleted ? "Hoàn thành" : "Chưa hoàn thành"}
         </p>
       </div>
     </div>

@@ -13,6 +13,16 @@ export async function login({ email, password }) {
   return data;
 }
 
+export async function logout() {
+  let { data, error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
 export async function getUser() {
   const { data: session } = await supabase.auth.getSession();
 

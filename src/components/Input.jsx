@@ -32,7 +32,7 @@ export default function Input({
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="form-field px-[--input-inline-padding] pb-1 pt-6"
+        className="form-field px-[--input-inline-padding] pb-1 pt-6 disabled:bg-gray-200 disabled:text-gray-500 hover:disabled:shadow-none"
         {...props}
       />
     </div>

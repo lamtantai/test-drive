@@ -1,4 +1,4 @@
-import Tab from "./Tab";
+import { NavLink } from "react-router";
 
 export default function TabList() {
   return (
@@ -7,5 +7,16 @@ export default function TabList() {
 
       <Tab href="/account/bookings" label="Lịch sử đặt xe" />
     </nav>
+  );
+}
+
+export function Tab({ href, label }) {
+  return (
+    <NavLink
+      to={href}
+      className={({ isActive }) => (isActive ? "bg-zinc-200 p-2" : "p-2")}
+    >
+      {label}
+    </NavLink>
   );
 }

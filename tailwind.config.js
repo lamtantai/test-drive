@@ -16,6 +16,19 @@ export default {
         lightGray: "#9ca3af",
         accent: "#2563eb",
         darkSlate: "#1f2937",
+
+        complete: {
+          100: "#D1F7D1",
+          700: "#2D6A4F",
+        },
+        error: {
+          100: "#FEE2E2",
+          700: "#F87171",
+        },
+        pending: {
+          100: "#FFF8C6",
+          700: "#FBBF24",
+        },
       },
 
       boxShadow: {

@@ -1,7 +1,6 @@
-// TableMobile.js
 import BookingCard from "./BookingCard";
 
-export default function TableMobile({ bookings }) {
+export default function BookingListMobile({ bookings }) {
   return (
     <div className="grid gap-xs sm:grid-cols-2">
       {bookings.map((booking, index) => (

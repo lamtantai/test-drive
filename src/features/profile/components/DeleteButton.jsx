@@ -15,7 +15,7 @@ export default function DeleteButton({ bookingId }) {
   return (
     <button
       disabled={isPending}
-      className={`rounded-md bg-red-100 p-2 text-red-600 ${isPending && "cursor-wait"}`}
+      className={`bg-error-100 text-error-700 rounded-md p-2 ${isPending && "cursor-wait"}`}
       onClick={() => mutate(bookingId)}
     >
       <FiTrash size={16} />

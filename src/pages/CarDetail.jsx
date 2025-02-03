@@ -1,89 +1,61 @@
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
-import Spinner from "../components/Spinner";
 import AdditionalCarInfo from "../features/cars/components/AdditionalCarInfo";
-import OtherCars from "../features/cars/components/OtherCars";
 
-import { getCars } from "../services/apiCar";
 import BookingForm from "../features/cars/components/BookingForm";
+import CarInfo from "../features/cars/components/CarInfo";
+import useCars from "../hooks/useCars";
+import CarListSlider from "../components/CarListSlider";
 
 export default function CarDetail() {
-  const carId = useParams().carId;
+  const { carId } = useParams();
 
-  const { data: cars, isLoading } = useQuery({
-    queryKey: ["cars"],
-    queryFn: getCars,
-  });
+  const { cars } = useCars();
 
-  console.log("render");
+  const currentCar = cars.find((car) => car.id === Number(carId));
 
-  if (isLoading) return <Spinner />;
+  if (!currentCar) {
+    return <div>Car not found</div>;
+  }
 
-  const car = cars.find((car) => car.id === Number(carId));
-
-  const ortherCars = cars
-    .filter((car) => car.id !== Number(carId))
-    .filter((car) => car.availabilityStatus);
+  const relatedCars = cars.filter(
+    (car) =>
+      car.id !== currentCar.id &&
+      (car.make === currentCar.make ||
+        car.engineType === currentCar.engineType),
+  );
 
   return (
-    <section className="" key={carId}>
-      <div className="mx-auto mb-20 grid md:mb-60 md:grid-cols-2">
-        <div className="bg-slate-50 md:self-start">
-          <img
-            src={car.imageUrl}
-            alt=""
-            className="mb-4 aspect-video w-full object-contain"
-          />
-        </div>
+    <>
+      <section className="relative grid md:grid-cols-2" key={carId}>
+        <img
+          src={currentCar.imageUrl}
+          alt=""
+          className="top-[calc(var(--header-height)+var(--spacing-xs))] aspect-video w-full bg-slate-50 object-contain md:sticky"
+        />
 
-        <div className="w-full p-xs">
-          <h1 className="text-3xl font-bold 2xl:text-5xl">
-            {car.make} - {car.model}
-          </h1>
+        <div className="px-xs">
+          <CarInfo car={currentCar} />
 
-          <p className="mt-2 text-lightBlack 2xl:text-xl">{car.description}</p>
-
-          <ul className="mb-6 mt-8 flex flex-col gap-6 lg:flex-row lg:flex-wrap lg:justify-between">
-            <li className="font-medium">
-              <p className="text-lightBlack">Lên đến</p>
-              <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">{car.power} HP</p>
-              <p className="text-sm text-lightBlack">Công suất định mức</p>
-            </li>
-
-            <li className="font-medium">
-              <p className="text-lightBlack">Tăng tốc trong</p>
-              <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">
-                {car.acceleration} giây
-              </p>
-              <p className="text-sm text-lightBlack">từ 0 lên đến 100 km/h</p>
-            </li>
-
-            <li className="font-medium">
-              <p className="text-lightBlack">Đạt đến</p>
-              <p className="mb-1 mt-2 text-3xl 2xl:text-5xl">
-                {car.topSpeed} km/h
-              </p>
-              <p className="text-sm text-lightBlack">Vận tốc tối đa</p>
-            </li>
-          </ul>
-
-          <AdditionalCarInfo car={car} />
+          <AdditionalCarInfo car={currentCar} />
 
           <h2 className="mb-4 mt-10 text-3xl font-semibold">
             Đăng ký lái thử xe ngay
           </h2>
 
           <BookingForm
-            isCarReady={car.availabilityStatus}
-            carId={car.id}
-            car={car}
+            isCarReady={currentCar.availabilityStatus}
+            carId={currentCar.id}
+            car={currentCar}
           />
         </div>
-      </div>
+      </section>
 
-      <h2 className="mb-2 px-xs text-5xl font-semibold">Mẫu xe khác</h2>
-      <OtherCars cars={ortherCars} />
-    </section>
+      <CarListSlider
+        title="Xe tương tự"
+        cars={relatedCars}
+        scrollbarClass="relatedCars"
+      />
+    </>
   );
 }

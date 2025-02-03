@@ -13,8 +13,6 @@ export default function LoginForm() {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setAccount((account) => ({ ...account, [name]: value }));
-
-    console.log(e.target);
   }
 
   const { login, isPending } = useLogin();

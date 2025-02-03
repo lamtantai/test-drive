@@ -1,26 +1,48 @@
-import { useQuery } from "@tanstack/react-query";
+import FilterList from "../components/FilterList";
 import CarList from "../features/cars/components/CarList";
-import Spinner from "../components/Spinner";
-import { getCars } from "../services/apiCar";
+import useCars from "../hooks/useCars";
+import useFilteredValue from "../hooks/useFilteredValue";
 
 export default function Cars() {
-  const { data: cars, isLoading } = useQuery({
-    queryKey: ["cars"],
-    queryFn: getCars,
-  });
+  const { cars } = useCars();
 
-  if (isLoading) return <Spinner />;
+  let filteredCars;
+
+  const filteredValue = useFilteredValue("engine");
+
+  function filterCarsType(value) {
+    return cars.filter((car) => car.engineType === value);
+  }
+
+  if (filteredValue === "all") filteredCars = cars;
+
+  if (filteredValue === "hybird") filteredCars = filterCarsType("hybird");
+
+  if (filteredValue === "diesel") filteredCars = filterCarsType("diesel");
+
+  if (filteredValue === "electric") filteredCars = filterCarsType("electric");
 
   return (
     <section className="px-xs">
-      <h1 className="p-xs text-xl font-bold uppercase md:text-4xl">
+      <h1 className="py-4 text-xl font-bold uppercase md:text-4xl">
         Danh sách mẫu xe{" "}
-        <span className="text-sm text-lightBlack lg:text-xl">
-          ({cars.length} Mẫu)
+        <span className="text-sm text-lightBlack">
+          [{filteredCars.length} Mẫu]
         </span>
       </h1>
 
-      <CarList cars={cars} />
+      <FilterList
+        filterField="engine"
+        options={[
+          { value: "all", label: "Tất cả" },
+          { value: "hybird", label: "Xe hybird" },
+          { value: "diesel", label: "Xe xăng" },
+          { value: "electric", label: "Xe điện" },
+        ]}
+        filteredValue={filteredValue}
+      />
+
+      <CarList cars={filteredCars} />
     </section>
   );
 }

@@ -20,8 +20,6 @@ export default function BookingForm({ isCarReady, car }) {
     status: "pending",
   });
 
-  console.log("booking");
-
   const [provinces, setProvinces] = useState([]);
 
   const { mutate: createBooking, isPending } = useMutation({
@@ -53,7 +51,7 @@ export default function BookingForm({ isCarReady, car }) {
       toast.error("Vui lòng chọn đầy đủ thông tin.");
       return;
     }
-    console.log(bookingData);
+
     createBooking(bookingData);
   }
 
@@ -72,7 +70,7 @@ export default function BookingForm({ isCarReady, car }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3" key={car.id}>
+    <form onSubmit={handleSubmit} className="space-y-3">
       <Select
         name="city"
         optionList={provinces}
@@ -83,18 +81,24 @@ export default function BookingForm({ isCarReady, car }) {
 
       <DatePicker onChange={handleSelectDate} />
 
-      {!user && (
-        <div className="mt-4 w-full grow rounded-md border border-green-700 bg-green-100 px-3 py-2 text-center text-2xl text-green-700">
+      {!isCarReady && (
+        <button
+          disabled
+          className="mt-4 w-full grow rounded-md border border-error-700 bg-error-100 px-3 py-2 text-center text-2xl text-error-700"
+        >
+          Bảo dưỡng
+        </button>
+      )}
+
+      {!user && isCarReady && (
+        <div className="mt-4 w-full grow rounded-md border border-pending-700 bg-pending-100 px-3 py-2 text-center text-2xl text-pending-700">
           <Link to="/login">Đăng nhập để đăng ký</Link>
         </div>
       )}
 
-      {user && (
-        <button
-          disabled={!isCarReady}
-          className={`mt-4 h-12 w-full grow rounded-md border text-2xl ${isCarReady ? "border-green-700 bg-green-100 text-green-700" : "border-red-700 bg-red-100 text-red-700"} `}
-        >
-          {isCarReady ? "Đăng ký" : "Bảo dưỡng"}
+      {user && isCarReady && (
+        <button className="mt-4 w-full grow rounded-md border border-complete-700 bg-complete-100 px-3 py-2 text-center text-2xl text-complete-700">
+          Đăng ký
         </button>
       )}
     </form>

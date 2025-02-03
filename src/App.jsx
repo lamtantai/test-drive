@@ -15,6 +15,7 @@ import Bookings from "./pages/Bookings";
 
 import { ToastContainer, Zoom } from "react-toastify";
 import UserProvider from "./context/UserContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ export default function App() {
 
       <ToastContainer
         position="top-center"
-        autoClose={1500}
+        autoClose={1000}
         limit={3}
         hideProgressBar={false}
         newestOnTop={false}
@@ -39,6 +40,7 @@ export default function App() {
       />
 
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route
             element={
@@ -59,9 +61,8 @@ export default function App() {
 
             <Route path="about" element={<About />} />
             <Route path="*" element={<PageNotFound />} />
+            <Route path="login" element={<Login />} />
           </Route>
-
-          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

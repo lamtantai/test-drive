@@ -1,6 +1,12 @@
 import supabase from "./supabase";
 
 export async function getCars() {
+  // await new Promise((resolve) =>
+  //   setTimeout(() => {
+  //     resolve();
+  //   }, 2000),
+  // );
+
   const { data, error } = await supabase.from("cars").select("*");
 
   if (error) {

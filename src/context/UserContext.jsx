@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
 import { getUser } from "../services/apiAuthentication";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-  const { data: user, isLoading } = useQuery({
+  const { data: user, isLoading } = useSuspenseQuery({
     queryKey: ["user"],
     queryFn: getUser,
   });

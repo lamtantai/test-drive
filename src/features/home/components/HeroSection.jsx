@@ -16,12 +16,9 @@ export default function HeroSection() {
             cảm nhận ngay!
           </h1>
 
-          <CTAButton
-            label="Chọn xe và đặt lịch"
-            href="/cars"
-            outlined
-            className="mt-xs"
-          />
+          <div className="mt-xs">
+            <CTAButton label="Xem các mẫu xe" href="/cars" outlined />
+          </div>
         </div>
       </div>
     </section>

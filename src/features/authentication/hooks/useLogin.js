@@ -1,21 +1,26 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login as loginApi } from "../../../services/apiAuthentication";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+
+const TIME_OUT = 1000;
 
 export default function useLogin() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const queryClient = useQueryClient();
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
+
     onSuccess: () => {
-      toast.success("Đăng nhập thành công");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      toast.success("Đăng nhập thành công", { autoClose: 1000 });
       setTimeout(() => {
         navigate("/cars");
-      }, 2000);
+      }, TIME_OUT);
     },
-    onError: (err) => console.log(err),
+
+    onError: () => toast.error("Đăng nhập không thành công"),
   });
 
   return { login, isPending };

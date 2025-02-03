@@ -35,3 +35,18 @@ export async function deleteBooking(id) {
 
   return data;
 }
+
+export async function changeBookingStatus(id) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .update({ status: "success" })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Could not delete booking");
+  }
+
+  return data;
+}
