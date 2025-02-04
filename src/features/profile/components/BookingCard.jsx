@@ -1,5 +1,5 @@
 import formattedDate from "../../../utils/formattedDate";
-import DeleteButton from "./DeleteButton";
+import DeleteBookingButton from "./DeleteBookingButton";
 
 export default function BookingCard({ booking, index }) {
   const date = new Date();
@@ -19,7 +19,7 @@ export default function BookingCard({ booking, index }) {
           STT: <strong>{String(index + 1).padStart(2, "0")}</strong>
         </p>
 
-        <DeleteButton bookingId={booking.id} />
+        <DeleteBookingButton bookingId={booking.id} />
       </div>
 
       <div className="text-lg">

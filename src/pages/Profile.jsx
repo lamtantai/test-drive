@@ -1,6 +1,6 @@
 import React from "react";
-import UserProfileForm from "../features/profile/components/UserProfileForm";
-import { useUser } from "../context/UserContext";
+import useUser from "../features/authentication/hooks/useUser";
+import UserProfileForm from "../features/authentication/components/UserProfileForm";
 
 export default function Profile() {
   const { user } = useUser();

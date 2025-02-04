@@ -4,8 +4,7 @@ export async function getBookings() {
   const { data, error } = await supabase.from("bookings").select("*");
 
   if (error) {
-    console.error(error);
-    throw new Error("Could not be load bookings data");
+    throw new Error(error.message);
   }
 
   return data;
@@ -18,8 +17,7 @@ export async function addBooking(newBooking) {
     .select();
 
   if (error) {
-    console.error(error);
-    throw new Error("Could not be send data");
+    throw new Error(error.message);
   }
 
   return data;
@@ -29,8 +27,7 @@ export async function deleteBooking(id) {
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
-    console.error(error);
-    throw new Error("Could not delete booking");
+    throw new Error(error.message);
   }
 
   return data;
@@ -44,8 +41,7 @@ export async function changeBookingStatus(id) {
     .select();
 
   if (error) {
-    console.error(error);
-    throw new Error("Could not delete booking");
+    throw new Error(error.message);
   }
 
   return data;

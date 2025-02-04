@@ -78,6 +78,12 @@ function RegistrationPolicyList() {
         <strong>Yêu cầu đăng ký:</strong> Khách hàng cần đăng ký trước ít nhất{" "}
         <strong>1 ngày</strong> trước khi mượn xe.
       </li>
+
+      <li>
+        <strong>Chính sách mượn xe:</strong> Mỗi khách hàng chỉ được mượn{" "}
+        <strong>1 xe/ngày</strong> nhằm đảm bảo cơ hội cho tất cả khách hàng có
+        thể trải nghiệm dịch vụ một cách công bằng.
+      </li>
     </ul>
   );
 }

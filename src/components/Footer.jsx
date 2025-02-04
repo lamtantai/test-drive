@@ -1,24 +1,60 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import {
+  AiFillFacebook,
+  AiFillInstagram,
+  AiFillTwitterCircle,
+} from "react-icons/ai";
 
 export default function Footer() {
   return (
-    <div className="relative mt-20 bg-blue-900 bg-cover bg-center px-6 py-20 text-white md:px-12 lg:px-16">
-      <div className="absolute inset-0 bg-black opacity-40"></div>
-      <div className="container relative z-10 mx-auto text-center">
-        <h3 className="mb-4 text-3xl font-bold leading-tight md:text-4xl">
-          Khám Phá Mẫu Xe Mới Nhất!
-        </h3>
-        <p className="mx-auto mb-6 max-w-3xl text-lg leading-relaxed md:text-xl">
-          Tìm ngay những mẫu xe phù hợp với nhu cầu của bạn và trải nghiệm lái
-          thử.
-        </p>
-        <Link
-          to="/cars"
-          className="transform rounded-md bg-yellow-500 px-8 py-3 font-semibold text-black transition-all hover:scale-105 hover:bg-yellow-400"
-        >
-          Khám Phá Ngay
-        </Link>
+    <footer className="mt-20 bg-gray-800 text-white">
+      <div className="mx-auto max-w-screen-xl px-xs py-20">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div>
+            <h3 className="mb-4 text-xl font-semibold">Thông tin công ty</h3>
+            <Link to="/about" className="mb-2 hover:text-yellow-400">
+              Giới thiệu
+            </Link>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold">Dịch vụ</h3>
+            <Link to="/cars" className="mb-2 hover:text-yellow-400">
+              Các mẫu xe
+            </Link>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold">Liên hệ</h3>
+            <ul>
+              <li className="mb-2 flex items-center">
+                <FaPhoneAlt className="mr-2" />
+                <span>+84 123 456 789</span>
+              </li>
+              <li className="mb-2 flex items-center">
+                <FaEnvelope className="mr-2" />
+                <span>info@gmail.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold">Theo dõi chúng tôi</h3>
+            <div className="flex space-x-4">
+              <button className="text-2xl hover:text-yellow-400">
+                <AiFillFacebook />
+              </button>
+              <button className="text-2xl hover:text-yellow-400">
+                <AiFillInstagram />
+              </button>
+              <button className="text-2xl hover:text-yellow-400">
+                <AiFillTwitterCircle />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 }

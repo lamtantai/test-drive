@@ -8,16 +8,15 @@ import formattedDate from "../../../utils/formattedDate";
 
 const MONTH_TO_ADD = 1;
 
-export default function DatePicker({ onChange }) {
-  const [selectedDate, setSelectedDate] = useState("");
+export default function DatePicker({ onChange, selected }) {
   const [openCalendar, setOpenCalendar] = useState(false);
 
   const calendarRef = useRef(null);
 
   // Đóng lịch khi bấm ra ngoài
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (calendarRef.current && !calendarRef.current.contains(e.target)) {
         setOpenCalendar(false);
       }
     };
@@ -32,7 +31,6 @@ export default function DatePicker({ onChange }) {
   }, []);
 
   function handleChange(date) {
-    setSelectedDate(date);
     setOpenCalendar(false);
     onChange(date);
   }
@@ -44,26 +42,26 @@ export default function DatePicker({ onChange }) {
         type="text"
         readOnly
         name="date"
-        value={selectedDate ? formattedDate(selectedDate) : ""}
+        value={selected ? formattedDate(selected) : ""}
         onClick={() => setOpenCalendar(!openCalendar)}
       />
 
       {openCalendar && (
         <div className="absolute z-10 mt-3 w-full bg-secondary p-2 shadow-card">
-          <Calendar selectedDate={selectedDate} onSelectDate={handleChange} />
+          <Calendar selected={selected} onSelectDate={handleChange} />
         </div>
       )}
     </div>
   );
 }
 
-function Calendar({ selectedDate, onSelectDate }) {
+function Calendar({ selected, onSelectDate }) {
   const defaultClassNames = getDefaultClassNames();
 
   // Cộng thêm 1 ngày vào ngày hiện tại
   const dateAfter = useMemo(() => {
     const date = new Date();
-    date.setDate(date.getDate());
+    date.setDate(date.getDate() + 1);
     return date;
   }, []);
 
@@ -85,10 +83,10 @@ function Calendar({ selectedDate, onSelectDate }) {
       showOutsideDays
       mode="single"
       locale={vi}
-      defaultMonth={selectedDate}
+      defaultMonth={selected}
       endMonth={endDate}
       disabled={{ before: dateAfter }}
-      selected={selectedDate}
+      selected={selected}
       onSelect={onSelectDate}
     />
   );

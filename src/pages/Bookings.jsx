@@ -1,16 +1,11 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getBookings } from "../services/apiBooking";
-
 import BookingListDesktop from "../features/profile/components/BookingListDesktop";
 import BookingListMobile from "../features/profile/components/BookingListMobile";
 import FilterList from "../components/FilterList";
 import useFilteredValue from "../hooks/useFilteredValue";
+import useBookings from "../features/profile/hooks/useBookings";
 
 export default function Bookings() {
-  const { data: bookings } = useSuspenseQuery({
-    queryKey: ["bookings"],
-    queryFn: getBookings,
-  });
+  const { bookings } = useBookings();
 
   let filteredBookings;
 

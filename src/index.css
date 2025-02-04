@@ -18,7 +18,13 @@ image {
 
   --input-inline-padding: 1rem;
 
-  --header-height: 80px;
+  --header-height: 60px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-height: 80px;
+  }
 }
 
 @media (min-width: 1024px) {

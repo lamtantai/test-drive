@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiTrash } from "react-icons/fi";
 import { deleteBooking } from "../../../services/apiBooking";
 
-export default function DeleteButton({ bookingId }) {
+export default function DeleteBookingButton({ bookingId }) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -15,7 +15,7 @@ export default function DeleteButton({ bookingId }) {
   return (
     <button
       disabled={isPending}
-      className={`bg-error-100 text-error-700 rounded-md p-2 ${isPending && "cursor-wait"}`}
+      className={`rounded-md bg-error-100 p-2 text-error-700 ${isPending && "cursor-wait"}`}
       onClick={() => mutate(bookingId)}
     >
       <FiTrash size={16} />

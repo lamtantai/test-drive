@@ -14,8 +14,9 @@ import Account from "./pages/Account";
 import Bookings from "./pages/Bookings";
 
 import { ToastContainer, Zoom } from "react-toastify";
-import UserProvider from "./context/UserContext";
 import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from "./components/ProtectedRoute";
+import FooterLayout from "./components/FooterLayout";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +29,7 @@ export default function App() {
         position="top-center"
         autoClose={1000}
         limit={3}
-        hideProgressBar={false}
+        hideProgressBar
         newestOnTop={false}
         closeOnClick={false}
         rtl={false}
@@ -42,27 +43,30 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route
-            element={
-              <UserProvider>
-                <AppLayout />
-              </UserProvider>
-            }
-          >
-            <Route index element={<Home />} />
-            <Route path="cars" element={<Cars />} />
-            <Route path="cars/:carId" element={<CarDetail />} />
+          <Route element={<AppLayout />}>
+            <Route element={<FooterLayout />}>
+              <Route index element={<Home />} />
+              <Route path="cars" element={<Cars />} />
+              <Route path="cars/:carId" element={<CarDetail />} />
+              <Route path="about" element={<About />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
 
-            <Route path="account" element={<Account />}>
+            <Route
+              path="account"
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Navigate replace to="profile" />} />
               <Route path="profile" element={<Profile />} />
               <Route path="bookings" element={<Bookings />} />
             </Route>
-
-            <Route path="about" element={<About />} />
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="login" element={<Login />} />
           </Route>
+
+          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

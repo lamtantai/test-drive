@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "./Select";
 import { PiCityLight } from "react-icons/pi";
-import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { addBooking } from "../../../services/apiBooking";
 import DatePicker from "./DatePicker";
-import { useUser } from "../../../context/UserContext";
 import { Link } from "react-router";
+import useUser from "../../authentication/hooks/useUser";
+import useBookings from "../../profile/hooks/useBookings";
+import useProvinces from "../hooks/useProvinces";
+import useAddBooking from "../hooks/useAddBooking";
+import SpinnerMini from "../../../components/SpinnerMini";
 
 export default function BookingForm({ isCarReady, car }) {
   const { user } = useUser();
+  const { bookings } = useBookings();
+
+  const { provinces } = useProvinces();
+  const { createBooking, isLoading, isSuccess } = useAddBooking();
 
   const [bookingData, setBookingData] = useState({
     user_id: user ? user.id : "",
@@ -20,30 +26,6 @@ export default function BookingForm({ isCarReady, car }) {
     status: "pending",
   });
 
-  const [provinces, setProvinces] = useState([]);
-
-  const { mutate: createBooking, isPending } = useMutation({
-    mutationFn: addBooking,
-    onSuccess: () => toast.success("Đăng ký thành công!"),
-    onError: () => toast.error("Đăng ký không thành công!"),
-  });
-
-  useEffect(() => {
-    async function getProvinces() {
-      const response = await fetch("https://provinces.open-api.vn/api");
-
-      if (!response.ok) {
-        throw new Error("Could not fetch data");
-      }
-
-      const data = await response.json();
-
-      setProvinces(data);
-    }
-
-    getProvinces();
-  }, []);
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -52,7 +34,28 @@ export default function BookingForm({ isCarReady, car }) {
       return;
     }
 
-    createBooking(bookingData);
+    function isSameDay(date1, date2) {
+      return (
+        date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear()
+      );
+    }
+
+    const hadSameDay = bookings.some((booking) =>
+      isSameDay(new Date(booking.date), bookingData.date),
+    );
+
+    if (hadSameDay) {
+      toast.error(`Bạn đã có lịch đặt xe vào ngày này.`);
+      return;
+    }
+
+    createBooking(bookingData, {
+      onSettled: () => {
+        setBookingData((prev) => ({ ...prev, date: "", city: "" }));
+      },
+    });
   }
 
   function handleSelectDate(date) {
@@ -62,10 +65,10 @@ export default function BookingForm({ isCarReady, car }) {
     }));
   }
 
-  function handleSelectCity(event) {
+  function handleSelectCity(e) {
     setBookingData((prevData) => ({
       ...prevData,
-      city: event.target.value,
+      city: e.target.value,
     }));
   }
 
@@ -77,9 +80,10 @@ export default function BookingForm({ isCarReady, car }) {
         icon={<PiCityLight />}
         placeholder="Chọn Tỉnh/Thành phố"
         onChange={handleSelectCity}
+        value={bookingData.city || ""}
       />
 
-      <DatePicker onChange={handleSelectDate} />
+      <DatePicker onChange={handleSelectDate} selected={bookingData.date} />
 
       {!isCarReady && (
         <button
@@ -97,8 +101,11 @@ export default function BookingForm({ isCarReady, car }) {
       )}
 
       {user && isCarReady && (
-        <button className="mt-4 w-full grow rounded-md border border-complete-700 bg-complete-100 px-3 py-2 text-center text-2xl text-complete-700">
-          Đăng ký
+        <button
+          disabled={isLoading}
+          className={`mt-4 w-full grow rounded-md border border-complete-700 bg-complete-100 px-3 py-2 text-center text-2xl text-complete-700 ${isLoading && "cursor-not-allowed"}`}
+        >
+          {isLoading ? <SpinnerMini /> : "Đăng ký"}
         </button>
       )}
     </form>

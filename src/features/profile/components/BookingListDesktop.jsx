@@ -1,4 +1,5 @@
-import DeleteButton from "./DeleteButton";
+import formattedDate from "../../../utils/formattedDate";
+import DeleteBookingButton from "./DeleteBookingButton";
 
 export default function BookingListDesktop({ bookings }) {
   return (
@@ -31,6 +32,16 @@ function TableHeader() {
 }
 
 function BookingRow({ booking, index }) {
+  const date = new Date();
+
+  const bookingDate = new Date(booking.date);
+
+  const yesterday = new Date(date);
+  yesterday.setDate(date.getDate() - 1); // Trừ đi 1 ngày từ ngày hiện tại
+
+  // So sánh nếu ngày hiện tại lớn hơn bookingDate 1 ngày
+  const isCompleted = yesterday > bookingDate;
+
   return (
     <tr key={booking.id} className="border-t border-zinc-200">
       <td className="px-6 py-4 text-gray-800">
@@ -38,7 +49,7 @@ function BookingRow({ booking, index }) {
       </td>
       <td className="px-6 py-4 text-gray-800">{booking.model}</td>
       <td className="px-6 py-4 text-gray-800">{booking.city}</td>
-      <td className="px-6 py-4 text-gray-800">{booking.date}</td>
+      <td className="px-6 py-4 text-gray-800">{formattedDate(bookingDate)}</td>
       <td
         className={`px-6 py-4 font-semibold ${booking.status === "completed" ? "text-complete-700" : "text-pending-700"}`}
       >
@@ -46,7 +57,7 @@ function BookingRow({ booking, index }) {
       </td>
 
       <td className="px-6 py-4">
-        <DeleteButton bookingId={booking.id} />
+        <DeleteBookingButton bookingId={booking.id} />
       </td>
     </tr>
   );

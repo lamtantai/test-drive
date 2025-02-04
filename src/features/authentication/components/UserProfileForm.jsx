@@ -3,9 +3,8 @@ import Input from "../../../components/Input";
 
 export default function UserProfileForm({ user }) {
   const initialProfile = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+123456789",
+    name: "Tan Tai",
+    phone: "0909090909",
   };
 
   const [profile, setProfile] = useState(initialProfile);
@@ -52,7 +51,7 @@ export default function UserProfileForm({ user }) {
         disabled={!isEditing}
       />
 
-      <div className="flex justify-end gap-4">
+      {/* <div className="flex justify-end gap-4">
         {isEditing ? (
           <button
             type="button"
@@ -82,7 +81,7 @@ export default function UserProfileForm({ user }) {
             Hủy
           </button>
         )}
-      </div>
+      </div> */}
     </form>
   );
 }

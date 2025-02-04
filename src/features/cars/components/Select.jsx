@@ -4,6 +4,7 @@ export default function Select({
   icon,
   onChange,
   optionList,
+  value,
 }) {
   return (
     <div className="relative">
@@ -12,6 +13,7 @@ export default function Select({
         id={name}
         className="form-field p-[--input-inline-padding]"
         onChange={onChange}
+        value={value}
         style={{
           WebkitAppearance: "none",
           MozAppearance: "none",
