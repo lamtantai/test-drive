@@ -27,11 +27,10 @@ Truy cập trang web thử xe tại: [Thử Xe](https://testanddrive.vercel.app/
 - **Chi tiết mẫu xe**: Xem thông tin chi tiết của từng mẫu xe.
 - **Đặt xe**: Người dùng có thể chọn mẫu xe và ngày thử xe. Hệ thống sẽ kiểm tra lịch sử đặt xe để tránh việc đặt trùng.
 - **Quản lý tài khoản**: Người dùng đã đăng nhập có thể xem và quản lý thông tin cá nhân cũng như lịch sử đặt xe.
-- **Footer**: Cung cấp thông tin liên hệ và các liên kết đến mạng xã hội.
 
 ## Công Nghệ Sử Dụng
 
 - **React**
 - **React Router**
 - **Tailwind CSS**
-- **Tankstack**
+- **Tanstack**
